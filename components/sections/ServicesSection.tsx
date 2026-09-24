@@ -1,85 +1,54 @@
 'use client'
-// components/sections/ServicesSection.tsx
+// components/sections/ServicesSection.tsx — Professional, sharp, static
 
 import { motion } from 'framer-motion'
-import { SectionHeader } from '@/components/ui/SectionHeader'
 import { SERVICES } from '@/lib/data'
-
-const containerVariants = {
-  hidden: {},
-  visible: { transition: { staggerChildren: 0.08 } },
-}
-
-const cardVariants = {
-  hidden:  { opacity: 0, y: 40 },
-  visible: { opacity: 1, y: 0, transition: { duration: 0.6, ease: 'easeOut' } },
-}
 
 export function ServicesSection() {
   return (
-    <section id="services" className="section-pad relative overflow-hidden">
-      {/* Subtle background dots */}
-      <div className="absolute inset-0 bg-dots opacity-30 pointer-events-none" />
+    <section id="services" className="section-pad bg-gray-50">
+      <div className="container-max">
+        
+        <div className="mb-16 md:mb-24 flex flex-col md:flex-row md:items-end justify-between gap-8">
+          <div className="max-w-2xl">
+            <h2 className="section-title mb-6">Core Capabilities</h2>
+            <p className="text-gray-500 text-lg leading-relaxed">
+              We deliver end-to-end engineering excellence across the entire technology stack, specializing in scalable, secure, and resilient systems.
+            </p>
+          </div>
+        </div>
 
-      <div className="container-max relative z-10">
-        <SectionHeader
-          eyebrow="What We Do"
-          title="Services Built for "
-          highlight="Growth"
-          subtitle="From concept to deployment, we deliver full-stack solutions that drive measurable business outcomes."
-        />
-
-        <motion.div
-          variants={containerVariants}
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true, margin: '-60px' }}
-          className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5"
-        >
-          {SERVICES.map((service) => (
-            <motion.article
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-0 border-t border-l border-gray-200">
+          {SERVICES.map((service, i) => (
+            <motion.div
               key={service.id}
-              variants={cardVariants}
-              className="card-glass rounded-2xl p-6 flex flex-col group cursor-default"
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: '-50px' }}
+              transition={{ delay: i * 0.1, duration: 0.5 }}
+              className="bg-white p-8 lg:p-10 border-b border-r border-gray-200 hover:bg-gray-50 transition-colors group"
             >
-              {/* Icon */}
-              <div
-                className="w-14 h-14 rounded-xl flex items-center justify-center text-2xl mb-5 transition-all duration-300 group-hover:scale-110"
-                style={{ background: `${service.color}15`, border: `1px solid ${service.color}30` }}
-              >
+              <div className="text-gray-900 mb-8 transition-transform group-hover:-translate-y-1">
                 {service.icon}
               </div>
-
-              {/* Title */}
-              <h3 className="font-display font-bold text-white text-lg mb-3 leading-snug">
+              <h3 className="font-display font-semibold text-gray-900 text-xl mb-4">
                 {service.title}
               </h3>
-
-              {/* Description */}
-              <p className="text-gray-400 text-sm leading-relaxed mb-5 flex-1">
+              <p className="text-gray-500 text-sm leading-relaxed mb-8">
                 {service.description}
               </p>
-
-              {/* Feature tags */}
-              <ul className="flex flex-wrap gap-2">
+              <ul className="space-y-3">
                 {service.features.map(f => (
-                  <li
-                    key={f}
-                    className="text-[11px] font-medium px-2.5 py-1 rounded-full border border-white/10 text-gray-400"
-                  >
+                  <li key={f} className="flex items-center gap-3 text-sm text-gray-600">
+                    <span className="w-1 h-1 bg-brand-500" />
                     {f}
                   </li>
                 ))}
               </ul>
-
-              {/* Bottom accent */}
-              <div
-                className="mt-5 h-0.5 w-0 group-hover:w-full rounded-full transition-all duration-500"
-                style={{ background: `linear-gradient(90deg, ${service.color}, transparent)` }}
-              />
-            </motion.article>
+            </motion.div>
           ))}
-        </motion.div>
+        </div>
+
       </div>
     </section>
   )

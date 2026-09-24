@@ -1,131 +1,74 @@
 'use client'
-// components/sections/TestimonialsSection.tsx
+// components/sections/TestimonialsSection.tsx — Professional layout
 
-import { useState, useEffect } from 'react'
+import { useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
-import { SectionHeader } from '@/components/ui/SectionHeader'
 import { TESTIMONIALS } from '@/lib/data'
-import { ChevronLeft, ChevronRight, Quote } from 'lucide-react'
-
-function StarRating({ rating }: { rating: number }) {
-  return (
-    <div className="flex gap-1">
-      {Array.from({ length: 5 }).map((_, i) => (
-        <span key={i} className={i < rating ? 'text-yellow-400' : 'text-gray-700'}>★</span>
-      ))}
-    </div>
-  )
-}
+import { ChevronLeft, ChevronRight } from 'lucide-react'
 
 export function TestimonialsSection() {
-  const [current, setCurrent] = useState(0)
-  const [direction, setDirection] = useState(1)
+  const [cur, setCur] = useState(0)
 
-  // Auto-advance
-  useEffect(() => {
-    const t = setInterval(() => {
-      setDirection(1)
-      setCurrent(c => (c + 1) % TESTIMONIALS.length)
-    }, 5000)
-    return () => clearInterval(t)
-  }, [])
-
-  const go = (dir: 1 | -1) => {
-    setDirection(dir)
-    setCurrent(c => (c + dir + TESTIMONIALS.length) % TESTIMONIALS.length)
-  }
-
-  const variants = {
-    enter:  (d: number) => ({ opacity: 0, x: d > 0 ? 60 : -60 }),
-    center: { opacity: 1, x: 0 },
-    exit:   (d: number) => ({ opacity: 0, x: d > 0 ? -60 : 60 }),
+  const go = (d: 1 | -1) => {
+    setCur(c => (c + d + TESTIMONIALS.length) % TESTIMONIALS.length)
   }
 
   return (
-    <section id="testimonials" className="section-pad relative overflow-hidden">
-      <div className="absolute inset-0 bg-grid opacity-15 pointer-events-none" />
-
-      <div className="container-max relative z-10">
-        <SectionHeader
-          eyebrow="Client Stories"
-          title="What Our Clients "
-          highlight="Say"
-          subtitle="Don't take our word for it — hear from the people who've worked with us."
-        />
-
-        {/* Testimonial carousel */}
-        <div className="relative max-w-3xl mx-auto">
-          {/* Quote icon */}
-          <div className="flex justify-center mb-8">
-            <div className="w-14 h-14 rounded-2xl glass-red flex items-center justify-center">
-              <Quote size={24} className="text-brand-500" />
-            </div>
-          </div>
-
-          {/* Slide */}
-          <div className="relative overflow-hidden min-h-[220px]">
-            <AnimatePresence custom={direction} mode="wait">
-              <motion.div
-                key={current}
-                custom={direction}
-                variants={variants}
-                initial="enter"
-                animate="center"
-                exit="exit"
-                transition={{ duration: 0.45, ease: 'easeOut' }}
-                className="text-center px-4"
-              >
-                <StarRating rating={TESTIMONIALS[current].rating} />
-                <blockquote className="mt-5 text-gray-200 text-lg sm:text-xl leading-relaxed italic font-light max-w-2xl mx-auto">
-                  "{TESTIMONIALS[current].content}"
-                </blockquote>
-                <div className="mt-8">
-                  <p className="font-display font-bold text-white text-lg">
-                    {TESTIMONIALS[current].name}
-                  </p>
-                  <p className="text-gray-400 text-sm mt-1">
-                    {TESTIMONIALS[current].role} · {TESTIMONIALS[current].company}
-                  </p>
-                </div>
-              </motion.div>
-            </AnimatePresence>
-          </div>
-
-          {/* Controls */}
-          <div className="flex items-center justify-center gap-6 mt-10">
-            <button
-              id="testimonial-prev"
-              onClick={() => go(-1)}
-              aria-label="Previous testimonial"
-              className="p-2.5 rounded-full glass border border-white/10 text-gray-400 hover:text-white hover:border-brand-500/40 transition-all"
-            >
-              <ChevronLeft size={20} />
-            </button>
-
-            {/* Dot indicators */}
+    <section id="testimonials" className="section-pad bg-white">
+      <div className="container-max">
+        
+        <div className="grid lg:grid-cols-12 gap-12 lg:gap-8 items-center">
+          
+          <div className="lg:col-span-4">
+            <h2 className="section-title mb-6">Client Impact</h2>
+            <p className="text-gray-500 text-lg leading-relaxed mb-10">
+              We measure our success by the growth and operational efficiency we deliver to our partners.
+            </p>
+            
             <div className="flex gap-2">
-              {TESTIMONIALS.map((_, i) => (
-                <button
-                  key={i}
-                  id={`testimonial-dot-${i}`}
-                  onClick={() => { setDirection(i > current ? 1 : -1); setCurrent(i) }}
-                  aria-label={`Go to testimonial ${i + 1}`}
-                  className={`h-1.5 rounded-full transition-all duration-300 ${
-                    i === current ? 'w-8 bg-brand-500' : 'w-1.5 bg-white/20'
-                  }`}
-                />
-              ))}
+              <button onClick={() => go(-1)} className="w-12 h-12 flex items-center justify-center border border-gray-200 text-gray-500 hover:bg-gray-900 hover:text-white hover:border-gray-900 transition-colors">
+                <ChevronLeft size={20} />
+              </button>
+              <button onClick={() => go(1)} className="w-12 h-12 flex items-center justify-center border border-gray-200 text-gray-500 hover:bg-gray-900 hover:text-white hover:border-gray-900 transition-colors">
+                <ChevronRight size={20} />
+              </button>
             </div>
-
-            <button
-              id="testimonial-next"
-              onClick={() => go(1)}
-              aria-label="Next testimonial"
-              className="p-2.5 rounded-full glass border border-white/10 text-gray-400 hover:text-white hover:border-brand-500/40 transition-all"
-            >
-              <ChevronRight size={20} />
-            </button>
           </div>
+
+          <div className="lg:col-span-7 lg:col-start-6">
+            <div className="relative min-h-[300px] bg-gray-50 p-8 sm:p-12 border border-gray-200">
+              <AnimatePresence mode="wait">
+                <motion.div
+                  key={cur}
+                  initial={{ opacity: 0, y: 10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: -10 }}
+                  transition={{ duration: 0.3 }}
+                >
+                  <div className="flex gap-1 mb-8">
+                    {[...Array(TESTIMONIALS[cur].rating)].map((_, i) => (
+                      <span key={i} className="text-brand-500 text-xl">★</span>
+                    ))}
+                  </div>
+                  
+                  <blockquote className="text-gray-900 text-xl sm:text-2xl font-display font-medium leading-relaxed mb-12">
+                    "{TESTIMONIALS[cur].content}"
+                  </blockquote>
+                  
+                  <div className="flex items-center gap-4 border-t border-gray-200 pt-6">
+                    <div className="w-12 h-12 bg-gray-900 flex items-center justify-center text-white font-bold">
+                      {TESTIMONIALS[cur].name.charAt(0)}
+                    </div>
+                    <div>
+                      <p className="font-semibold text-gray-900">{TESTIMONIALS[cur].name}</p>
+                      <p className="text-sm text-gray-500">{TESTIMONIALS[cur].role}, {TESTIMONIALS[cur].company}</p>
+                    </div>
+                  </div>
+                </motion.div>
+              </AnimatePresence>
+            </div>
+          </div>
+
         </div>
       </div>
     </section>

@@ -1,5 +1,5 @@
 'use client'
-// components/layout/Navbar.tsx — Sticky glassmorphism navbar with scroll detection
+// components/layout/Navbar.tsx — Dark theme strictly
 
 import { useState, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
@@ -8,18 +8,16 @@ import { Logo } from '@/components/ui/Logo'
 import { NAV_LINKS } from '@/lib/data'
 
 export function Navbar() {
-  const [scrolled,     setScrolled]     = useState(false)
-  const [mobileOpen,   setMobileOpen]   = useState(false)
+  const [scrolled,      setScrolled]      = useState(false)
+  const [mobileOpen,    setMobileOpen]    = useState(false)
   const [activeSection, setActiveSection] = useState('home')
 
-  // Detect scroll to apply glass blur
   useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 20)
+    const onScroll = () => setScrolled(window.scrollY > 10)
     window.addEventListener('scroll', onScroll, { passive: true })
     return () => window.removeEventListener('scroll', onScroll)
   }, [])
 
-  // Track active section via IntersectionObserver
   useEffect(() => {
     const ids = NAV_LINKS.map(l => l.href.replace('#', ''))
     const observers: IntersectionObserver[] = []
@@ -36,126 +34,108 @@ export function Navbar() {
     return () => observers.forEach(o => o.disconnect())
   }, [])
 
-  const handleNavClick = (href: string) => {
+  const go = (href: string) => {
     setMobileOpen(false)
-    const el = document.getElementById(href.replace('#', ''))
-    el?.scrollIntoView({ behavior: 'smooth' })
+    document.getElementById(href.replace('#', ''))?.scrollIntoView({ behavior: 'smooth' })
   }
 
   return (
     <>
       <motion.header
-        initial={{ y: -100, opacity: 0 }}
-        animate={{ y: 0, opacity: 1 }}
-        transition={{ duration: 0.6, ease: 'easeOut' }}
-        className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
+        initial={{ y: -80 }}
+        animate={{ y: 0 }}
+        transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
+        className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
           scrolled
-            ? 'bg-dark-900/80 backdrop-blur-xl border-b border-white/5 shadow-nav'
-            : 'bg-transparent'
+            ? 'bg-gray-950/90 backdrop-blur-md shadow-nav'
+            : 'bg-gray-950'
         }`}
       >
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex items-center justify-between h-[72px]">
+          <div className="flex items-center justify-between h-20">
 
             {/* Logo */}
-            <button
-              onClick={() => handleNavClick('#home')}
-              className="flex-shrink-0 focus:outline-none"
-              aria-label="CodeX Solutions home"
-            >
-              <Logo size={36} />
+            <button onClick={() => go('#home')} className="focus:outline-none" aria-label="Home">
+              {/* Note: if the logo needs to be white on dark bg, you might need a white version of the logo.png, 
+                  but for now we use the one the user provided. */}
+              <Logo size={130} />
             </button>
 
             {/* Desktop nav */}
-            <nav className="hidden lg:flex items-center gap-1" role="navigation" aria-label="Main navigation">
-              {NAV_LINKS.map((link) => {
+            <nav className="hidden lg:flex items-center gap-6" aria-label="Main navigation">
+              {NAV_LINKS.map(link => {
                 const isActive = activeSection === link.href.replace('#', '')
                 return (
                   <button
                     key={link.href}
-                    onClick={() => handleNavClick(link.href)}
-                    className={`relative px-4 py-2 text-sm font-medium rounded-lg transition-all duration-300 ${
-                      isActive
-                        ? 'text-white'
-                        : 'text-gray-400 hover:text-white'
+                    onClick={() => go(link.href)}
+                    className={`text-sm font-medium transition-colors ${
+                      isActive ? 'text-white' : 'text-gray-400 hover:text-white'
                     }`}
                   >
-                    {isActive && (
-                      <motion.span
-                        layoutId="nav-pill"
-                        className="absolute inset-0 rounded-lg bg-white/5 border border-brand-500/30"
-                        transition={{ type: 'spring', bounce: 0.2, duration: 0.5 }}
-                      />
-                    )}
-                    <span className="relative z-10">{link.label}</span>
+                    {link.label}
                   </button>
                 )
               })}
             </nav>
 
-            {/* Desktop CTA */}
-            <div className="hidden lg:flex items-center gap-3">
+            {/* CTA */}
+            <div className="hidden lg:flex items-center">
               <button
-                onClick={() => handleNavClick('#contact')}
-                className="btn-primary text-sm px-5 py-2.5"
                 id="nav-cta-button"
+                onClick={() => go('#contact')}
+                className="btn-primary text-sm px-6 py-2.5"
               >
-                Get a Quote
+                Start a Project
               </button>
             </div>
 
-            {/* Mobile menu toggle */}
+            {/* Hamburger */}
             <button
               id="mobile-menu-toggle"
-              className="lg:hidden p-2 rounded-lg text-gray-400 hover:text-white hover:bg-white/5 transition-colors"
-              onClick={() => setMobileOpen(prev => !prev)}
+              className="lg:hidden p-2 text-gray-300 hover:text-white transition-colors"
+              onClick={() => setMobileOpen(p => !p)}
               aria-expanded={mobileOpen}
-              aria-label="Toggle mobile menu"
+              aria-label="Toggle menu"
             >
-              {mobileOpen ? <X size={22} /> : <Menu size={22} />}
+              {mobileOpen ? <X size={24} /> : <Menu size={24} />}
             </button>
           </div>
         </div>
       </motion.header>
 
-      {/* Mobile menu */}
+      {/* Mobile drawer */}
       <AnimatePresence>
         {mobileOpen && (
           <motion.div
             id="mobile-menu"
-            initial={{ opacity: 0, y: -20 }}
+            initial={{ opacity: 0, y: -10 }}
             animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -20 }}
-            transition={{ duration: 0.25, ease: 'easeOut' }}
-            className="fixed inset-x-0 top-[72px] z-40 bg-dark-900/95 backdrop-blur-2xl border-b border-white/5 lg:hidden"
+            exit={{ opacity: 0, y: -10 }}
+            transition={{ duration: 0.2 }}
+            className="fixed inset-x-0 top-20 z-40 bg-gray-950 border-t border-gray-900 shadow-xl lg:hidden"
           >
-            <nav className="px-6 py-6 flex flex-col gap-2" role="navigation" aria-label="Mobile navigation">
-              {NAV_LINKS.map((link, i) => (
-                <motion.button
+            <nav className="px-6 py-6 flex flex-col gap-4" aria-label="Mobile navigation">
+              {NAV_LINKS.map((link) => (
+                <button
                   key={link.href}
-                  initial={{ opacity: 0, x: -20 }}
-                  animate={{ opacity: 1, x: 0 }}
-                  transition={{ delay: i * 0.05 }}
-                  onClick={() => handleNavClick(link.href)}
-                  className={`text-left px-4 py-3 rounded-lg text-sm font-medium transition-all ${
+                  onClick={() => go(link.href)}
+                  className={`text-left text-lg font-medium transition-colors ${
                     activeSection === link.href.replace('#', '')
-                      ? 'text-white bg-brand-500/10 border border-brand-500/30'
-                      : 'text-gray-400 hover:text-white hover:bg-white/5'
+                      ? 'text-white'
+                      : 'text-gray-400 hover:text-white'
                   }`}
                 >
                   {link.label}
-                </motion.button>
+                </button>
               ))}
-              <motion.button
-                initial={{ opacity: 0, x: -20 }}
-                animate={{ opacity: 1, x: 0 }}
-                transition={{ delay: NAV_LINKS.length * 0.05 }}
-                onClick={() => handleNavClick('#contact')}
-                className="btn-primary mt-3 justify-center"
+              <button
+                onClick={() => go('#contact')}
+                className="btn-primary mt-4 w-full justify-center"
                 id="mobile-cta-button"
               >
-                Get a Quote
-              </motion.button>
+                Start a Project
+              </button>
             </nav>
           </motion.div>
         )}

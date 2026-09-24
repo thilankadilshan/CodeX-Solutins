@@ -68,7 +68,7 @@ export default function RootLayout({
       lang="en"
       className={`${inter.variable} ${outfit.variable} ${jetbrainsMono.variable}`}
     >
-      <body className="bg-dark-900 text-white antialiased">
+      <body className="bg-white text-gray-900 antialiased">
         {children}
       </body>
     </html>
