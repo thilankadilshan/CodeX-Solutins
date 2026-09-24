@@ -1,0 +1,3 @@
+// hooks/useScrollAnimation.ts — Placeholder
+// Will contain: useScrollAnimation, useInView, useParallax, useCounter hooks
+export {}

@@ -1,0 +1,15 @@
+// Public assets directory
+// Place static files here: images, fonts, icons, svg illustrations, etc.
+//
+// Planned structure:
+// public/
+// ├── images/
+// │   ├── logo.svg
+// │   ├── logo-white.svg
+// │   ├── hero-illustration.svg
+// │   ├── grid.svg              (background grid pattern)
+// │   ├── team/                 (team member photos)
+// │   └── portfolio/            (project screenshots)
+// ├── icons/
+// │   └── favicon.ico
+// └── fonts/                    (self-hosted fonts if needed)

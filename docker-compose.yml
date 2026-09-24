@@ -1,0 +1,33 @@
+version: '3.8'
+
+services:
+  # ─── Development Server (hot reload) ───────────────────────────────────────
+  dev:
+    build:
+      context: .
+      target: development
+    container_name: codex-solutions-dev
+    ports:
+      - "3000:3000"
+    volumes:
+      - .:/app
+      - /app/node_modules      # Anonymous volume so container node_modules isn't overwritten
+      - /app/.next             # Anonymous volume to persist build cache
+    environment:
+      - NODE_ENV=development
+      - WATCHPACK_POLLING=true  # Required for hot reload inside Docker on Windows/Mac
+    restart: unless-stopped
+
+  # ─── Production Server ──────────────────────────────────────────────────────
+  prod:
+    build:
+      context: .
+      target: production
+    container_name: codex-solutions-prod
+    ports:
+      - "3001:3000"
+    environment:
+      - NODE_ENV=production
+    restart: unless-stopped
+    profiles:
+      - prod  # Only starts when: docker compose --profile prod up
