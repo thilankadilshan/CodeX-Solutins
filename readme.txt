@@ -1,3 +1,0 @@
-codeX new
-hi
-hellow
