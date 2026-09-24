@@ -9,55 +9,48 @@ module.exports = {
   theme: {
     extend: {
       colors: {
+        navy: {
+          900: '#132440', // Deepest Navy
+          800: '#16476A', // Dark Blue
+        },
+        teal: {
+          500: '#3B9797', // Vibrant Teal
+        },
+        crimson: {
+          500: '#BF092F', // Deep Red
+        },
         brand: {
-          50:  '#FFF0F0',
-          100: '#FFD6D6',
-          200: '#FFADAD',
-          300: '#FF7575',
-          400: '#FF3333',
-          500: '#E8000D',
-          600: '#C20009',
-          700: '#990007',
-          800: '#7A0006',
-          900: '#660005',
-          950: '#3D0003',
-        },
-        gray: {
-          50:  '#FAFAFA',
-          100: '#F5F5F5',
-          200: '#E5E5E5',
-          300: '#D4D4D4',
-          400: '#A3A3A3',
-          500: '#737373',
-          600: '#525252',
-          700: '#404040',
-          800: '#262626',
-          900: '#171717',
-          950: '#0A0A0A',
-        },
+          navy: '#132440',
+          blue: '#16476A',
+          teal: '#3B9797',
+          crimson: '#BF092F',
+        }
       },
       fontFamily: {
-        sans:    ['Inter', 'system-ui', 'sans-serif'],
-        display: ['Outfit', 'Inter', 'sans-serif'],
-        mono:    ['JetBrains Mono', 'monospace'],
+        sans:    ['var(--font-inter)', 'system-ui', 'sans-serif'],
+        display: ['var(--font-outfit)', 'Inter', 'sans-serif'],
+        mono:    ['var(--font-mono)', 'monospace'],
       },
       boxShadow: {
-        'nav': '0 1px 0 0 rgba(255,255,255,0.1)',
-        'premium': '0 4px 20px -2px rgba(0,0,0,0.05)',
+        'nav': '0 4px 30px rgba(0, 0, 0, 0.1)',
+        'premium': '0 10px 40px -10px rgba(19,36,64,0.3)',
+        'glow-teal': '0 0 20px rgba(59, 151, 151, 0.4)',
+        'glow-crimson': '0 0 20px rgba(191, 9, 47, 0.4)',
+      },
+      backgroundImage: {
+        'gradient-radial': 'radial-gradient(var(--tw-gradient-stops))',
+        'hero-gradient': 'linear-gradient(135deg, #132440 0%, #16476A 100%)',
+        'mesh-pattern': "url('/mesh.svg')",
       },
       animation: {
-        'fade-in':  'fadeIn 0.5s ease-out forwards',
-        'slide-up': 'slideUp 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards',
+        'fade-in':  'fadeIn 0.8s ease-out forwards',
+        'slide-up': 'slideUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards',
+        'float': 'float 6s ease-in-out infinite',
       },
       keyframes: {
         fadeIn:  { '0%': { opacity: '0' }, '100%': { opacity: '1' } },
-        slideUp: { '0%': { opacity: '0', transform: 'translateY(20px)' }, '100%': { opacity: '1', transform: 'translateY(0)' } },
-      },
-      borderRadius: {
-        'xl': '0',
-        '2xl': '0',
-        '3xl': '0',
-        '4xl': '0',
+        slideUp: { '0%': { opacity: '0', transform: 'translateY(30px)' }, '100%': { opacity: '1', transform: 'translateY(0)' } },
+        float: { '0%, 100%': { transform: 'translateY(0)' }, '50%': { transform: 'translateY(-10px)' } },
       },
     },
   },

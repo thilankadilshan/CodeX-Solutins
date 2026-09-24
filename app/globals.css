@@ -6,24 +6,22 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Outfit:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500&display=swap');
 
 :root {
-  --red:          #E8000D;
-  --red-hover:    #C20009;
+  --navy-900:     #132440;
+  --navy-800:     #16476A;
+  --teal-500:     #3B9797;
+  --crimson-500:  #BF092F;
   
-  --bg-white:     #FFFFFF;
-  --bg-off:       #F8F9FA;
-  --bg-dark:      #0A0A0A;
-  --bg-darker:    #000000;
+  --bg-dark:      #0C1627; /* Darker shade of navy for true background */
+  --bg-card:      #132440;
+  --bg-card-hover:#16476A;
 
-  --text-dark:    #111111;
-  --text-body:    #4A4A55;
-  --text-muted:   #888899;
+  --text-main:    #F8F9FA;
+  --text-muted:   #94A3B8;
 
-  --border:       #EAEAEA;
-  --border-dark:  #222222;
+  --border:       rgba(59, 151, 151, 0.2); /* Teal tint border */
+  --border-light: rgba(255, 255, 255, 0.1);
 
-  --shadow-sm:    0 2px 8px rgba(0,0,0,0.04);
-  --shadow-md:    0 8px 24px rgba(0,0,0,0.06);
-  --shadow-lg:    0 16px 48px rgba(0,0,0,0.08);
+  --shadow-glow:  0 0 20px rgba(59, 151, 151, 0.4);
 }
 
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -35,66 +33,89 @@ html {
 
 body {
   font-family: 'Inter', system-ui, sans-serif;
-  background-color: var(--bg-white);
-  color: var(--text-body);
+  background-color: var(--bg-dark);
+  color: var(--text-main);
   overflow-x: hidden;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
 ::selection {
-  background: var(--red);
+  background: var(--teal-500);
   color: white;
 }
 
-::-webkit-scrollbar { width: 6px; }
-::-webkit-scrollbar-track { background: var(--bg-off); }
-::-webkit-scrollbar-thumb { background: #D1D1D1; border-radius: 0; }
-::-webkit-scrollbar-thumb:hover { background: var(--red); }
+::-webkit-scrollbar { width: 8px; }
+::-webkit-scrollbar-track { background: var(--bg-dark); }
+::-webkit-scrollbar-thumb { background: var(--navy-800); border-radius: 4px; }
+::-webkit-scrollbar-thumb:hover { background: var(--teal-500); }
 
 @layer utilities {
-  .text-gradient-red {
-    background: linear-gradient(135deg, #E8000D 0%, #FF2A2A 100%);
+  .text-gradient {
+    background: linear-gradient(135deg, var(--teal-500) 0%, #6EE7B7 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+  
+  .text-gradient-crimson {
+    background: linear-gradient(135deg, var(--crimson-500) 0%, #FF5A7A 100%);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
   }
 
   .eyebrow {
-    @apply inline-flex items-center gap-2 text-xs font-bold tracking-[0.2em] uppercase text-brand-500;
+    @apply inline-flex items-center gap-2 text-sm font-bold tracking-[0.15em] uppercase text-teal-500;
   }
 
-  /* Sharp Corporate Buttons */
+  /* Soft Professional Buttons */
   .btn-primary {
-    @apply inline-flex items-center justify-center gap-2 px-8 py-3.5 font-semibold text-white transition-all duration-300;
-    background: var(--red);
+    @apply inline-flex items-center justify-center gap-2 px-8 py-3.5 font-semibold text-white rounded-full transition-all duration-300;
+    background: var(--teal-500);
+    box-shadow: 0 4px 15px rgba(59, 151, 151, 0.3);
   }
   .btn-primary:hover {
-    background: var(--red-hover);
-    box-shadow: 0 10px 20px -10px rgba(232,0,13,0.5);
+    background: #2D7A7A;
+    box-shadow: var(--shadow-glow);
+    transform: translateY(-2px);
+  }
+  
+  .btn-secondary {
+    @apply inline-flex items-center justify-center gap-2 px-8 py-3.5 font-semibold text-white rounded-full transition-all duration-300;
+    background: var(--crimson-500);
+    box-shadow: 0 4px 15px rgba(191, 9, 47, 0.3);
+  }
+  .btn-secondary:hover {
+    background: #9A0725;
+    box-shadow: 0 0 20px rgba(191, 9, 47, 0.5);
+    transform: translateY(-2px);
   }
   
   .btn-outline {
-    @apply inline-flex items-center justify-center gap-2 px-8 py-3.5 font-semibold transition-all duration-300;
-    color: var(--text-dark);
+    @apply inline-flex items-center justify-center gap-2 px-8 py-3.5 font-semibold rounded-full transition-all duration-300;
+    color: var(--text-main);
     background: transparent;
-    border: 1px solid var(--border);
+    border: 1px solid var(--border-light);
   }
   .btn-outline:hover {
-    border-color: var(--red);
-    color: var(--red);
-    background: rgba(232,0,13,0.02);
+    border-color: var(--teal-500);
+    color: var(--teal-500);
+    background: rgba(59, 151, 151, 0.05);
   }
 
-  /* Sharp Cards */
+  /* Rounded Modern Cards */
   .card-premium {
-    background: white;
-    border: 1px solid var(--border);
-    transition: all 0.3s ease;
+    background: var(--bg-card);
+    border: 1px solid var(--border-light);
+    border-radius: 1.5rem; /* 24px */
+    transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
   }
   .card-premium:hover {
-    border-color: #D0D0D0;
-    box-shadow: var(--shadow-md);
+    border-color: var(--teal-500);
+    background: var(--bg-card-hover);
+    transform: translateY(-5px);
+    box-shadow: 0 10px 40px -10px rgba(0,0,0,0.5);
   }
 
   .section-pad { @apply py-24 sm:py-32 px-4 sm:px-6 lg:px-8; }
@@ -102,8 +123,8 @@ body {
 
   .bg-grid-premium {
     background-image: 
-      linear-gradient(rgba(0,0,0,0.03) 1px, transparent 1px),
-      linear-gradient(90deg, rgba(0,0,0,0.03) 1px, transparent 1px);
+      linear-gradient(rgba(255,255,255,0.02) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255,255,255,0.02) 1px, transparent 1px);
     background-size: 64px 64px;
   }
 }
@@ -111,17 +132,17 @@ body {
 .hero-title {
   font-family: 'Outfit', sans-serif;
   font-weight: 800;
-  line-height: 1.05;
-  letter-spacing: -0.03em;
-  color: var(--text-dark);
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+  color: var(--text-main);
   font-size: clamp(2.5rem, 6vw, 5.5rem);
 }
 
 .section-title {
   font-family: 'Outfit', sans-serif;
   font-weight: 700;
-  line-height: 1.1;
+  line-height: 1.2;
   letter-spacing: -0.02em;
-  color: var(--text-dark);
+  color: var(--text-main);
   font-size: clamp(2rem, 4vw, 3rem);
 }

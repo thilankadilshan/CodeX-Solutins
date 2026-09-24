@@ -1,5 +1,5 @@
 'use client'
-// components/layout/Navbar.tsx — Dark theme strictly
+// components/layout/Navbar.tsx — Professional, dark theme, modern
 
 import { useState, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
@@ -47,8 +47,8 @@ export function Navbar() {
         transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
         className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
           scrolled
-            ? 'bg-gray-950/90 backdrop-blur-md shadow-nav'
-            : 'bg-gray-950'
+            ? 'bg-[#0C1627]/90 backdrop-blur-md shadow-nav border-b border-white/5'
+            : 'bg-transparent'
         }`}
       >
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -56,8 +56,6 @@ export function Navbar() {
 
             {/* Logo */}
             <button onClick={() => go('#home')} className="focus:outline-none" aria-label="Home">
-              {/* Note: if the logo needs to be white on dark bg, you might need a white version of the logo.png, 
-                  but for now we use the one the user provided. */}
               <Logo size={130} />
             </button>
 
@@ -70,7 +68,7 @@ export function Navbar() {
                     key={link.href}
                     onClick={() => go(link.href)}
                     className={`text-sm font-medium transition-colors ${
-                      isActive ? 'text-white' : 'text-gray-400 hover:text-white'
+                      isActive ? 'text-teal-500' : 'text-gray-400 hover:text-white'
                     }`}
                   >
                     {link.label}
@@ -93,7 +91,7 @@ export function Navbar() {
             {/* Hamburger */}
             <button
               id="mobile-menu-toggle"
-              className="lg:hidden p-2 text-gray-300 hover:text-white transition-colors"
+              className="lg:hidden p-2 text-gray-400 hover:text-white transition-colors"
               onClick={() => setMobileOpen(p => !p)}
               aria-expanded={mobileOpen}
               aria-label="Toggle menu"
@@ -113,7 +111,7 @@ export function Navbar() {
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -10 }}
             transition={{ duration: 0.2 }}
-            className="fixed inset-x-0 top-20 z-40 bg-gray-950 border-t border-gray-900 shadow-xl lg:hidden"
+            className="fixed inset-x-0 top-20 z-40 bg-[#0C1627] border-b border-white/10 shadow-xl lg:hidden"
           >
             <nav className="px-6 py-6 flex flex-col gap-4" aria-label="Mobile navigation">
               {NAV_LINKS.map((link) => (
@@ -122,7 +120,7 @@ export function Navbar() {
                   onClick={() => go(link.href)}
                   className={`text-left text-lg font-medium transition-colors ${
                     activeSection === link.href.replace('#', '')
-                      ? 'text-white'
+                      ? 'text-teal-500'
                       : 'text-gray-400 hover:text-white'
                   }`}
                 >

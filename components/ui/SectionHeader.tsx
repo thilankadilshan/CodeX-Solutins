@@ -1,5 +1,5 @@
-'use client'
-// components/ui/SectionHeader.tsx — Light theme
+﻿'use client'
+// components/ui/SectionHeader.tsx â€” Light theme
 
 import { motion } from 'framer-motion'
 
@@ -24,11 +24,11 @@ export function SectionHeader({ eyebrow, title, highlight, subtitle, center = tr
     >
       {/* Eyebrow */}
       <div className={`flex items-center gap-2 mb-5 ${center ? 'justify-center' : ''}`}>
-        <span className="w-5 h-0.5 rounded-full bg-brand-500" />
-        <span className="text-brand-500 text-xs font-bold tracking-[0.2em] uppercase">
+        <span className="w-5 h-0.5 rounded-full bg-teal-500" />
+        <span className="text-teal-500 text-xs font-bold tracking-[0.2em] uppercase">
           {eyebrow}
         </span>
-        <span className="w-5 h-0.5 rounded-full bg-brand-500" />
+        <span className="w-5 h-0.5 rounded-full bg-teal-500" />
       </div>
 
       {/* Title */}
@@ -44,10 +44,11 @@ export function SectionHeader({ eyebrow, title, highlight, subtitle, center = tr
 
       {/* Subtitle */}
       {subtitle && (
-        <p className={`text-gray-600 text-lg max-w-2xl leading-relaxed ${center ? 'mx-auto' : ''}`}>
+        <p className={`text-gray-300 text-lg max-w-2xl leading-relaxed ${center ? 'mx-auto' : ''}`}>
           {subtitle}
         </p>
       )}
     </motion.div>
   )
 }
+
